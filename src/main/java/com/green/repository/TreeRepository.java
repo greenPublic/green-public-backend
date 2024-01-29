@@ -9,14 +9,14 @@ import org.springframework.data.mongodb.repository .MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TreeRepository extends MongoRepository<TreeDocument, UUID> {
+public interface TreeRepository extends MongoRepository<TreeDocument, String> {
     Language save(Language language);
 
-    Optional<TreeDocument> findById(UUID id);
+    Optional<TreeDocument> findById(String id);
 
     List<TreeDocument> findAll();
 
-    void deleteById(UUID id);
+    void deleteById(String id);
 
     void delete(TreeDocument treeDocument);
 }

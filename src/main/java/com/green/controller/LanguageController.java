@@ -2,18 +2,12 @@ package com.green.controller;
 
 import com.green.dto.LanguageDto;
 import com.green.service.implementation.LanguageService;
-import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,7 +16,6 @@ public class LanguageController {
 
     private final LanguageService languageService;
 
-
     @PostMapping
     public ResponseEntity<LanguageDto> saveLanguage(@RequestBody LanguageDto language) {
         LanguageDto savedLanguage = languageService.saveLanguage(language);
@@ -30,20 +23,19 @@ public class LanguageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LanguageDto> findLanguageById(@PathVariable UUID id) {
+    public ResponseEntity<LanguageDto> findLanguageById(@PathVariable String id) {
         LanguageDto language = languageService.findLanguageById(id);
         return new ResponseEntity<>(language, HttpStatus.OK);
     }
 
-//    @GetMapping
-//
-//    public ResponseEntity<List<LanguageDto>> findAllLanguages() {
-////        List<LanguageDto> languages = languageService.findAllLanguages();
-//        return new ResponseEntity<>(languages, HttpStatus.OK);
-//    }
+    @GetMapping
+    public ResponseEntity<List<LanguageDto>> findAllLanguages() {
+        List<LanguageDto> languages = languageService.findAllLanguages();
+        return new ResponseEntity<>(languages, HttpStatus.OK);
+    }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLanguageById(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteLanguageById(@PathVariable String id) {
         languageService.deleteLanguageById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
