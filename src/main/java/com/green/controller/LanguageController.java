@@ -36,6 +36,7 @@ public class LanguageController {
     }
 
 //    @GetMapping
+
 //    public ResponseEntity<List<LanguageDto>> findAllLanguages() {
 ////        List<LanguageDto> languages = languageService.findAllLanguages();
 //        return new ResponseEntity<>(languages, HttpStatus.OK);
