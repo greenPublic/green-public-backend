@@ -1,0 +1,20 @@
+type Query{
+    getAllUsers:[UserDao]
+}
+type Mutation{
+    createUser(userDto:UserDto!):UserDao
+    updateUser(userDto:UserDto!,id:ID):UserDao
+    deleteUser(id:ID):Boolean
+}
+
+type UserDao{
+    userId:ID
+    name:String
+    surname:String
+}
+
+input UserDto{
+    userId:ID
+    name:String
+    surname:String
+}
