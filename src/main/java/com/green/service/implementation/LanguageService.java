@@ -3,12 +3,12 @@ package com.green.service.implementation;
 import com.green.dto.LanguageDto;
 import com.green.entity.translation.Language;
 import com.green.repository.LanguageRepository;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,18 +23,20 @@ public class LanguageService {
         return modelMapper.map(languageSaved, LanguageDto.class);
     }
 
-    public LanguageDto findLanguageById(UUID id) {
+    public LanguageDto findLanguageById(String id) {
         Optional<Language> language = languageRepository.findById(id);
         return modelMapper.map(language, LanguageDto.class);
     }
 
-//    public List<LanguageDto> findAllLanguages() {
-//        List<Language> all = languageRepository.findAll();
-//        modelMapper.map(all, new List<Language>() {
-//        });
-//    }
+    public List<LanguageDto> findAllLanguages() {
+        List<Language> all = languageRepository.findAll();
+        return all.stream()
+                .map(language -> modelMapper.map(language, LanguageDto.class))
+                .toList();
 
-    public void deleteLanguageById(UUID id) {
+    }
+
+    public void deleteLanguageById(String id) {
         languageRepository.deleteById(id);
     }
 

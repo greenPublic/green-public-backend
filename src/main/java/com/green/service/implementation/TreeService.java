@@ -1,24 +1,37 @@
 package com.green.service.implementation;
 
+import com.green.dto.TreeDto;
+import com.green.entity.translation.Language;
 import com.green.entity.tree.TreeDocument;
+import com.green.repository.LanguageRepository;
 import com.green.repository.TreeRepository;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class TreeService {
 
     private final TreeRepository treeRepository;
+    private final LanguageRepository languageRepository;
+    private final ModelMapper modelMapper;
 
-    public TreeDocument save(TreeDocument treeDocument) {
-        return treeRepository.save(treeDocument);
+    public TreeDto save(TreeDto treeDto, String lang) {
+
+        TreeDocument treeDocument = modelMapper.map(treeDto, TreeDocument.class);
+        Language byLanguageAbbr = languageRepository.findByLanguageAbbr(lang);
+
+        treeDocument.setLanguage(byLanguageAbbr);
+
+        TreeDocument saved = treeRepository.save(treeDocument);
+        return modelMapper.map(saved, TreeDto.class);
     }
 
-    public Optional<TreeDocument> findById(UUID id) {
+    public Optional<TreeDocument> findById(String id) {
         return treeRepository.findById(id);
     }
 
@@ -26,7 +39,7 @@ public class TreeService {
         return treeRepository.findAll();
     }
 
-    public void deleteById(UUID id) {
+    public void deleteById(String id) {
         treeRepository.deleteById(id);
     }
 

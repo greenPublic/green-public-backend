@@ -1,20 +1,15 @@
 package com.green.controller;
 
+import com.green.dto.TreeDto;
 import com.green.entity.tree.TreeDocument;
 import com.green.service.implementation.TreeService;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/trees")
@@ -28,13 +23,13 @@ public class TreeController {
     }
 
     @PostMapping
-    public ResponseEntity<TreeDocument> saveTree(@RequestBody TreeDocument treeDocument) {
-        TreeDocument savedTree = treeService.save(treeDocument);
+    public ResponseEntity<TreeDto> saveTree(@RequestBody TreeDto treeDto, String lang) {
+        TreeDto savedTree = treeService.save(treeDto, lang);
         return new ResponseEntity<>(savedTree, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TreeDocument> getTreeById(@PathVariable UUID id) {
+    public ResponseEntity<TreeDocument> getTreeById(@PathVariable String id) {
         Optional<TreeDocument> treeOptional = treeService.findById(id);
         return treeOptional.map(tree -> new ResponseEntity<>(tree, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -47,7 +42,7 @@ public class TreeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTreeById(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteTreeById(@PathVariable String id) {
         treeService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

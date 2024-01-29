@@ -2,12 +2,11 @@ package com.green.entity.tree;
 
 import com.green.constants.Season;
 import com.green.constants.Sunlight;
-import com.green.entity.translation.TextContent;
+import com.green.entity.translation.Language;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,10 +20,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class TreeDocument {
 
     @Id
-    private Long id;
-
-    private TextContent name;
-
+    private String id;
+    @Field("name")
+    private String name;
     @Field("sunlightRequirement")
     private Sunlight sunlightRequirement;
     @Field("soilType")
@@ -39,8 +37,9 @@ public class TreeDocument {
     private double plantingDepth;
     @Field("spacingRequirement")
     private String spacingRequirement;
-
     @Field("additionalNotes")
+    private String additionalNotes;
     @DBRef
-    private TextContent additionalNotes;
+    @Field("language")
+    private Language language;
 }
