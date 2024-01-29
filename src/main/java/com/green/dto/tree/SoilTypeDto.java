@@ -1,4 +1,4 @@
-package com.green.dto;
+package com.green.dto.tree;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Builder
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class LanguageDto {
-    private String language;
+@AllArgsConstructor
+@Data
+public class SoilTypeDto {
 
-    private String languageAbbr;
+    private String name;
+    private String description;
 }

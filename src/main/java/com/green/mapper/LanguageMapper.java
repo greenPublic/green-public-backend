@@ -1,9 +1,7 @@
 package com.green.mapper;
 
-import com.green.dto.LanguageDto;
+import com.green.dto.language.LanguageDto;
 import com.green.entity.translation.Language;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

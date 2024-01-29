@@ -1,14 +1,15 @@
 package com.green.service.implementation;
 
-import com.green.dto.LanguageDto;
+import com.green.dto.language.LanguageDto;
 import com.green.entity.translation.Language;
 import com.green.repository.LanguageRepository;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -17,10 +18,17 @@ public class LanguageService {
     private final LanguageRepository languageRepository;
     private final ModelMapper modelMapper;
 
-    public LanguageDto saveLanguage(LanguageDto languageDto) {
+    public ResponseEntity<LanguageDto> saveLanguage(LanguageDto languageDto) {
         Language language = modelMapper.map(languageDto, Language.class);
+        Language byLanguageAbbr =
+                languageRepository.findByLanguageAbbr(languageDto.getLanguageAbbr());
+
+        if (byLanguageAbbr != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
         Language languageSaved = languageRepository.save(language);
-        return modelMapper.map(languageSaved, LanguageDto.class);
+        return ResponseEntity.ok(modelMapper.map(languageSaved, LanguageDto.class));
     }
 
     public LanguageDto findLanguageById(String id) {

@@ -25,12 +25,8 @@ public class TreeDocument {
     private String name;
     @Field("sunlightRequirement")
     private Sunlight sunlightRequirement;
-    @Field("soilType")
-    private SoilType soilType;
     @Field("pH")
     private double pH;
-    @Field("wateringFrequency")
-    private int wateringFrequency;
     @Field("season")
     private Season season;
     @Field("plantingDepth")
@@ -42,4 +38,16 @@ public class TreeDocument {
     @DBRef
     @Field("language")
     private Language language;
+
+    @DBRef
+    @Field("wateringFrequency")
+    private WateringFrequency wateringFrequency;
+
+    @DBRef
+    @Field("soilType")
+    private Language soilType;
+
+    @DBRef
+    @Field("species")
+    private TreeSpecies species;
 }

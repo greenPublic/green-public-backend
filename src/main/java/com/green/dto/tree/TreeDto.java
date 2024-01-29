@@ -1,4 +1,4 @@
-package com.green.dto;
+package com.green.dto.tree;
 
 import com.green.constants.Season;
 import com.green.constants.Sunlight;

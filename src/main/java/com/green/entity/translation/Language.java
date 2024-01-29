@@ -13,7 +13,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Language {
-
     @Id
     private String id;
 
@@ -22,5 +21,4 @@ public class Language {
 
     @Field("languageAbbr")
     private String languageAbbr;
-
 }
