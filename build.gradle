@@ -41,7 +41,7 @@ java {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'com.green.GreenPublicBackendApplication.java'
+        attributes 'Main-Class': 'com/green/GreenPublicBackendApplication.java'
     }
 }
 
