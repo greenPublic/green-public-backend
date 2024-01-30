@@ -1,4 +1,4 @@
-package com.green.service.implementation;
+package com.green.service.implementation.language;
 
 import com.green.dto.language.LanguageDto;
 import com.green.entity.translation.Language;

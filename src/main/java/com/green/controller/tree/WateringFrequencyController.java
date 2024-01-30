@@ -1,7 +1,7 @@
-package com.green.controller;
+package com.green.controller.tree;
 
 import com.green.entity.tree.WateringFrequency;
-import com.green.service.implementation.WateringFrequencyService;
+import com.green.service.implementation.tree.WateringFrequencyService;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

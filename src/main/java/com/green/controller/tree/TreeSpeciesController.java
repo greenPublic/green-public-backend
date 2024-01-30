@@ -1,8 +1,8 @@
-package com.green.controller;
+package com.green.controller.tree;
 
 import com.green.dto.language.LanguageDto;
 import com.green.dto.tree.TreeSpeciesDto;
-import com.green.service.implementation.TreeSpeciesService;
+import com.green.service.implementation.tree.TreeSpeciesService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

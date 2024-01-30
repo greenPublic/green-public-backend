@@ -1,7 +1,7 @@
-package com.green.controller;
+package com.green.controller.tree;
 
 import com.green.dto.tree.SoilTypeDto;
-import com.green.service.implementation.SoilTypeService;
+import com.green.service.implementation.tree.SoilTypeService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

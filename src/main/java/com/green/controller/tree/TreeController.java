@@ -1,8 +1,8 @@
-package com.green.controller;
+package com.green.controller.tree;
 
 import com.green.dto.tree.TreeDto;
 import com.green.entity.tree.TreeDocument;
-import com.green.service.implementation.TreeService;
+import com.green.service.implementation.tree.TreeService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;

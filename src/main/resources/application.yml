@@ -7,7 +7,6 @@ spring:
       database: mydatabase
       username: greenpubliccommunity
       password: 8mZWI9SAw5ktSijZ
-#      authentication-database: admin
       uri: mongodb+srv://greenpubliccommunity:8mZWI9SAw5ktSijZ@cluster0.15skls0.mongodb.net/?retryWrites=true&w=majority
   graphql:
     graphiql:

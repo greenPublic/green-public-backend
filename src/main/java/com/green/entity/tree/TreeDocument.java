@@ -45,7 +45,7 @@ public class TreeDocument {
 
     @DBRef
     @Field("soilType")
-    private Language soilType;
+    private SoilType soilType;
 
     @DBRef
     @Field("species")

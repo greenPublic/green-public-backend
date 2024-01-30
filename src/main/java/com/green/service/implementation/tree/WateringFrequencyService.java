@@ -1,4 +1,4 @@
-package com.green.service.implementation;
+package com.green.service.implementation.tree;
 
 import com.green.entity.translation.Language;
 import com.green.entity.tree.WateringFrequency;

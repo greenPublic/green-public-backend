@@ -1,7 +1,7 @@
-package com.green.controller;
+package com.green.controller.language;
 
 import com.green.dto.language.LanguageDto;
-import com.green.service.implementation.LanguageService;
+import com.green.service.implementation.language.LanguageService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
