@@ -1,13 +1,4 @@
-
 spring:
-  data:
-    mongodb:
-#      host: localhost
-#      port: 27017
-#      database: mydatabase
-      username: greenpubliccommunity
-      password: 8mZWI9SAw5ktSijZ
-      uri: mongodb+srv://greenpubliccommunity:8mZWI9SAw5ktSijZ@cluster0.15skls0.mongodb.net/?retryWrites=true&w=majority
   graphql:
     graphiql:
       enabled: true
