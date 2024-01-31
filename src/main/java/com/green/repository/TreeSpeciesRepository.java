@@ -13,7 +13,7 @@ public interface TreeSpeciesRepository extends MongoRepository<TreeSpecies, Stri
 
     TreeSpecies findByScientificName(String scientificName);
 
-    List<TreeSpecies> findByLanguage(Language language);
+    List<TreeSpecies> findByLanguage(String language);
 
     void deleteByName(String name);
 }

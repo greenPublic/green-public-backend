@@ -22,7 +22,6 @@ public class TreeService {
     public TreeDto save(TreeDto treeDto, String lang) {
         TreeDocument treeDocument = modelMapper.map(treeDto, TreeDocument.class);
         Language byLanguageAbbr = languageRepository.findByLanguageAbbr(lang);
-
         treeDocument.setLanguage(byLanguageAbbr);
 
         TreeDocument saved = treeRepository.save(treeDocument);

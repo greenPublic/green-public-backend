@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,8 +30,8 @@ public class SuggestionsController {
 
     @PostMapping
     public ResponseEntity<SuggestionsDto> createSuggestions(
-            @RequestBody SuggestionsDto suggestionsDto) {
-        SuggestionsDto createdSuggestions = suggestionsService.createSuggestions(suggestionsDto);
+            @RequestBody SuggestionsDto suggestionsDto, @RequestHeader String lang) {
+        SuggestionsDto createdSuggestions = suggestionsService.createSuggestions(suggestionsDto, lang);
         return new ResponseEntity<>(createdSuggestions, HttpStatus.CREATED);
     }
 
@@ -43,8 +44,8 @@ public class SuggestionsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SuggestionsDto>> getAllSuggestions() {
-        List<SuggestionsDto> suggestionsList = suggestionsService.getAllSuggestions();
+    public ResponseEntity<List<SuggestionsDto>> getAllSuggestions(@RequestHeader String lang) {
+        List<SuggestionsDto> suggestionsList = suggestionsService.getAllSuggestions(lang);
         return new ResponseEntity<>(suggestionsList, HttpStatus.OK);
     }
 

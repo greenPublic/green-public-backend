@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 public interface SoilTypeRepository extends MongoRepository<SoilType, String> {
     SoilType findByName(String name);
 
+    List<SoilType> findAllByLanguage(String language);
+
     List<SoilType> findByNameContaining(String partialName);
 
     List<SoilType> findByDescription(String description);

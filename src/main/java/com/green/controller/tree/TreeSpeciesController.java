@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,8 +28,8 @@ public class TreeSpeciesController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TreeSpeciesDto>> getAllTreeSpecies() {
-        List<TreeSpeciesDto> treeSpeciesList = treeSpeciesService.getAllTreeSpecies();
+    public ResponseEntity<List<TreeSpeciesDto>> getAllTreeSpecies(@RequestHeader String lang) {
+        List<TreeSpeciesDto> treeSpeciesList = treeSpeciesService.getAllTreeSpecies(lang);
         return new ResponseEntity<>(treeSpeciesList, HttpStatus.OK);
     }
 
@@ -41,8 +42,8 @@ public class TreeSpeciesController {
 
     @PostMapping
     public ResponseEntity<TreeSpeciesDto> saveTreeSpecies(
-            @RequestBody TreeSpeciesDto treeSpeciesDto) {
-        TreeSpeciesDto savedTreeSpecies = treeSpeciesService.saveTreeSpecies(treeSpeciesDto);
+            @RequestBody TreeSpeciesDto treeSpeciesDto, @RequestHeader String lang) {
+        TreeSpeciesDto savedTreeSpecies = treeSpeciesService.saveTreeSpecies(treeSpeciesDto, lang);
         return new ResponseEntity<>(savedTreeSpecies, HttpStatus.CREATED);
     }
 
@@ -64,15 +65,6 @@ public class TreeSpeciesController {
         TreeSpeciesDto treeSpeciesDto =
                 treeSpeciesService.getTreeSpeciesByScientificName(scientificName);
         return new ResponseEntity<>(treeSpeciesDto, HttpStatus.OK);
-    }
-
-    @GetMapping("/language/{language}")
-    public ResponseEntity<List<TreeSpeciesDto>> getTreeSpeciesByLanguage(
-            @PathVariable String language) {
-        LanguageDto languageDto = new LanguageDto();
-        List<TreeSpeciesDto> treeSpeciesList =
-                treeSpeciesService.getTreeSpeciesByLanguage(languageDto);
-        return new ResponseEntity<>(treeSpeciesList, HttpStatus.OK);
     }
 
     @DeleteMapping("/name/{name}")

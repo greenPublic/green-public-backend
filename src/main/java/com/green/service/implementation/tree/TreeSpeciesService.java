@@ -5,29 +5,29 @@ import com.green.dto.language.LanguageDto;
 import com.green.dto.tree.TreeSpeciesDto;
 import com.green.entity.translation.Language;
 import com.green.entity.tree.TreeSpecies;
+import com.green.repository.LanguageRepository;
 import com.green.repository.TreeSpeciesRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class TreeSpeciesService {
 
     private final TreeSpeciesRepository treeSpeciesRepository;
     private final ModelMapper modelMapper;
+    private final LanguageRepository languageRepository;
 
-    @Autowired
-    public TreeSpeciesService(TreeSpeciesRepository treeSpeciesRepository,
-                              ModelMapper modelMapper) {
-        this.treeSpeciesRepository = treeSpeciesRepository;
-        this.modelMapper = modelMapper;
-    }
 
-    public List<TreeSpeciesDto> getAllTreeSpecies() {
-        List<TreeSpecies> treeSpeciesList = treeSpeciesRepository.findAll();
+    public List<TreeSpeciesDto> getAllTreeSpecies(String lang) {
+        Language byLanguageAbbr = languageRepository.findByLanguageAbbr(lang);
+        String languageAbbrId = byLanguageAbbr.getId();
+
+        List<TreeSpecies> treeSpeciesList = treeSpeciesRepository.findByLanguage(languageAbbrId);
         return treeSpeciesList.stream()
                 .map(treeSpecies -> modelMapper.map(treeSpecies, TreeSpeciesDto.class))
                 .collect(Collectors.toList());
@@ -39,8 +39,13 @@ public class TreeSpeciesService {
                 treeSpecies -> modelMapper.map(treeSpecies, TreeSpeciesDto.class));
     }
 
-    public TreeSpeciesDto saveTreeSpecies(TreeSpeciesDto treeSpeciesDto) {
+    public TreeSpeciesDto saveTreeSpecies(TreeSpeciesDto treeSpeciesDto, String lang) {
+
+        Language byLanguageAbbr = languageRepository.findByLanguageAbbr(lang);
+        String languageAbbrId = byLanguageAbbr.getId();
+
         TreeSpecies treeSpecies = modelMapper.map(treeSpeciesDto, TreeSpecies.class);
+        treeSpecies.setLanguage(byLanguageAbbr);
         TreeSpecies savedTreeSpecies = treeSpeciesRepository.save(treeSpecies);
         return modelMapper.map(savedTreeSpecies, TreeSpeciesDto.class);
     }
@@ -57,14 +62,6 @@ public class TreeSpeciesService {
     public TreeSpeciesDto getTreeSpeciesByScientificName(String scientificName) {
         TreeSpecies treeSpecies = treeSpeciesRepository.findByScientificName(scientificName);
         return modelMapper.map(treeSpecies, TreeSpeciesDto.class);
-    }
-
-    public List<TreeSpeciesDto> getTreeSpeciesByLanguage(LanguageDto languageDto) {
-        Language language = modelMapper.map(languageDto, Language.class);
-        List<TreeSpecies> treeSpeciesList = treeSpeciesRepository.findByLanguage(language);
-        return treeSpeciesList.stream()
-                .map(treeSpecies -> modelMapper.map(treeSpecies, TreeSpeciesDto.class))
-                .collect(Collectors.toList());
     }
 
     public void deleteTreeSpeciesByName(String name) {

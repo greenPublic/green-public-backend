@@ -11,7 +11,7 @@ public interface InformationRepository extends MongoRepository<Information, Stri
 
     Information findByHeader(String header);
 
-    List<Information> findByLanguage(Language language);
+    List<Information> findByLanguage(String language);
 
     List<Information> findByDescriptionContaining(String keyword);
 

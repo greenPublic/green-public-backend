@@ -2,6 +2,8 @@ package com.green.service.implementation.suggestions;
 
 import com.green.dto.suggestions.SuggestionsDto;
 import com.green.entity.suggestions.Suggestions;
+import com.green.entity.translation.Language;
+import com.green.repository.LanguageRepository;
 import com.green.repository.SuggestionsRepository;
 import java.util.List;
 import java.util.Optional;
@@ -16,10 +18,15 @@ public class SuggestionsService {
 
     private final SuggestionsRepository suggestionsRepository;
     private final ModelMapper modelMapper;
+    private final LanguageRepository languageRepository;
 
 
-    public SuggestionsDto createSuggestions(SuggestionsDto suggestionsDto) {
+    public SuggestionsDto createSuggestions(SuggestionsDto suggestionsDto, String lang) {
         Suggestions suggestions = modelMapper.map(suggestionsDto, Suggestions.class);
+
+        Language byLanguageAbbr = languageRepository.findByLanguageAbbr(lang);
+        String languageAbbrId = byLanguageAbbr.getId();
+
         Suggestions savedSuggestions = suggestionsRepository.save(suggestions);
         return modelMapper.map(savedSuggestions, SuggestionsDto.class);
     }
@@ -30,8 +37,12 @@ public class SuggestionsService {
                 suggestions -> modelMapper.map(suggestions, SuggestionsDto.class));
     }
 
-    public List<SuggestionsDto> getAllSuggestions() {
+    public List<SuggestionsDto> getAllSuggestions(String lang) {
         List<Suggestions> suggestionsList = suggestionsRepository.findAll();
+
+        Language byLanguageAbbr = languageRepository.findByLanguageAbbr(lang);
+        String languageAbbrId = byLanguageAbbr.getId();
+
         return suggestionsList.stream()
                 .map(suggestions -> modelMapper.map(suggestions, SuggestionsDto.class))
                 .collect(Collectors.toList());

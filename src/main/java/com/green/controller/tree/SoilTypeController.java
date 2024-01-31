@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,14 +24,16 @@ public class SoilTypeController {
     private final SoilTypeService soilTypeService;
 
     @PostMapping
-    public ResponseEntity<SoilTypeDto> createSoilType(@RequestBody SoilTypeDto soilTypeDto) {
-        SoilTypeDto createdSoilTypeDto = soilTypeService.createSoilType(soilTypeDto);
+    public ResponseEntity<SoilTypeDto> createSoilType(@RequestBody SoilTypeDto soilTypeDto,
+                                                      @RequestHeader
+                                                      String lang) {
+        SoilTypeDto createdSoilTypeDto = soilTypeService.createSoilType(soilTypeDto, lang);
         return new ResponseEntity<>(createdSoilTypeDto, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<SoilTypeDto>> getAllSoilTypes() {
-        List<SoilTypeDto> soilTypeDtos = soilTypeService.getAllSoilTypes();
+    public ResponseEntity<List<SoilTypeDto>> getAllSoilTypes(@RequestHeader String lang) {
+        List<SoilTypeDto> soilTypeDtos = soilTypeService.getAllSoilTypes(lang);
         return new ResponseEntity<>(soilTypeDtos, HttpStatus.OK);
     }
 

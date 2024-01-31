@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,8 +29,8 @@ public class RetailStoreController {
 
     @PostMapping
     public ResponseEntity<RetailStoreDto> createRetailStore(
-            @RequestBody RetailStoreDto retailStoreDto) {
-        RetailStoreDto createdRetailStore = retailStoreService.createRetailStore(retailStoreDto);
+            @RequestBody RetailStoreDto retailStoreDto, @RequestHeader String lang) {
+        RetailStoreDto createdRetailStore = retailStoreService.createRetailStore(retailStoreDto, lang);
         return new ResponseEntity<>(createdRetailStore, HttpStatus.CREATED);
     }
 
@@ -44,8 +45,8 @@ public class RetailStoreController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RetailStoreDto>> getAllRetailStores() {
-        List<RetailStoreDto> retailStores = retailStoreService.getAllRetailStores();
+    public ResponseEntity<List<RetailStoreDto>> getAllRetailStores(@RequestHeader String lang) {
+        List<RetailStoreDto> retailStores = retailStoreService.getAllRetailStores(lang);
         return new ResponseEntity<>(retailStores, HttpStatus.OK);
     }
 

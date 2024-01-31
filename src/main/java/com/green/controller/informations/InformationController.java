@@ -1,7 +1,6 @@
 package com.green.controller.informations;
 
-import com.green.entity.informations.Information;
-import com.green.entity.translation.Language;
+import com.green.dto.informations.InformationDto;
 import com.green.service.implementation.informations.InformationService;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,31 +29,32 @@ public class InformationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Information>> getAllInformation() {
-        List<Information> informationList = informationService.getAllInformation();
+    public ResponseEntity<List<InformationDto>> getAllInformation(@RequestHeader String lang) {
+        List<InformationDto> informationList = informationService.getAllInformation(lang);
         return new ResponseEntity<>(informationList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Information> getInformationById(@PathVariable String id) {
-        Optional<Information> information = informationService.getInformationById(id);
+    public ResponseEntity<InformationDto> getInformationById(@PathVariable String id) {
+        Optional<InformationDto> information = informationService.getInformationById(id);
         return information.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    public ResponseEntity<Information> createInformation(@RequestBody Information information) {
-        Information createdInformation = informationService.createInformation(information);
+    public ResponseEntity<InformationDto> createInformation(
+            @RequestBody InformationDto information, @RequestHeader String lang) {
+        InformationDto createdInformation = informationService.createInformation(information, lang);
         return new ResponseEntity<>(createdInformation, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Information> updateInformation(@PathVariable String id,
-                                                         @RequestBody Information information) {
-        Optional<Information> existingInformation = informationService.getInformationById(id);
+    public ResponseEntity<InformationDto> updateInformation(@PathVariable String id,
+                                                            @RequestBody
+                                                            InformationDto information) {
+        Optional<InformationDto> existingInformation = informationService.getInformationById(id);
         if (existingInformation.isPresent()) {
-            information.setId(id);
-            Information updatedInformation = informationService.updateInformation(information);
+            InformationDto updatedInformation = informationService.updateInformation(information);
             return new ResponseEntity<>(updatedInformation, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -67,22 +68,23 @@ public class InformationController {
     }
 
     @GetMapping("/header/{header}")
-    public ResponseEntity<Information> getInformationByHeader(@PathVariable String header) {
-        Information information = informationService.getInformationByHeader(header);
+    public ResponseEntity<InformationDto> getInformationByHeader(@PathVariable String header) {
+        InformationDto information = informationService.getInformationByHeader(header);
         return new ResponseEntity<>(information, HttpStatus.OK);
     }
 
     @GetMapping("/language/{language}")
-    public ResponseEntity<List<Information>> getInformationByLanguage(@PathVariable
-                                                                      Language language) {
-        List<Information> informationList = informationService.getInformationByLanguage(language);
+    public ResponseEntity<List<InformationDto>> getInformationByLanguage(@PathVariable
+                                                                         String language) {
+        List<InformationDto> informationList =
+                informationService.getInformationByLanguage(language);
         return new ResponseEntity<>(informationList, HttpStatus.OK);
     }
 
     @GetMapping("/description/{keyword}")
-    public ResponseEntity<List<Information>> getInformationByDescriptionContaining(
+    public ResponseEntity<List<InformationDto>> getInformationByDescriptionContaining(
             @PathVariable String keyword) {
-        List<Information> informationList =
+        List<InformationDto> informationList =
                 informationService.getInformationByDescriptionContaining(keyword);
         return new ResponseEntity<>(informationList, HttpStatus.OK);
     }

@@ -1,34 +1,40 @@
 package com.green.service.implementation.tree;
 
 import com.green.dto.tree.SoilTypeDto;
+import com.green.entity.translation.Language;
 import com.green.entity.tree.SoilType;
+import com.green.repository.LanguageRepository;
 import com.green.repository.SoilTypeRepository;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class SoilTypeService {
 
     private final SoilTypeRepository soilTypeRepository;
     private final ModelMapper modelMapper;
+    private final LanguageRepository languageRepository;
 
-    @Autowired
-    public SoilTypeService(SoilTypeRepository soilTypeRepository, ModelMapper modelMapper) {
-        this.soilTypeRepository = soilTypeRepository;
-        this.modelMapper = modelMapper;
-    }
 
-    public SoilTypeDto createSoilType(SoilTypeDto soilTypeDto) {
+    public SoilTypeDto createSoilType(SoilTypeDto soilTypeDto, String lang) {
         SoilType soilType = modelMapper.map(soilTypeDto, SoilType.class);
+
+        Language byLanguageAbbr = languageRepository.findByLanguageAbbr(lang);
+        soilType.setLanguage(byLanguageAbbr);
+
         soilType = soilTypeRepository.save(soilType);
         return modelMapper.map(soilType, SoilTypeDto.class);
     }
 
-    public List<SoilTypeDto> getAllSoilTypes() {
-        List<SoilType> soilTypes = soilTypeRepository.findAll();
+    public List<SoilTypeDto> getAllSoilTypes(String lang) {
+        Language byLanguageAbbr = languageRepository.findByLanguageAbbr(lang);
+        String languageAbbrId = byLanguageAbbr.getId();
+
+        List<SoilType> soilTypes = soilTypeRepository.findAllByLanguage(languageAbbrId);
         return soilTypes.stream()
                 .map(soilType -> modelMapper.map(soilType, SoilTypeDto.class))
                 .collect(Collectors.toList());
