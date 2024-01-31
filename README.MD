@@ -1,4 +1,8 @@
-# GreenPublic Backend
+# GreenPublic Open Source Project
+
+Location Permission |  Main Page
+:-------------------------:|:-------------------------:
+![img_1.png](img_1.png)   |  ![img.png](img.png)
 
 This repository contains the backend code for the GreenPublic application, which aims to promote green initiatives, tree planting, and environmental awareness. The application is developed using Spring Boot with MongoDB as the database.
 
