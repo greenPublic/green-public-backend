@@ -3,6 +3,7 @@ package com.green.service.implementation.language;
 import com.green.dto.language.LanguageDto;
 import com.green.entity.translation.Language;
 import com.green.repository.LanguageRepository;
+import com.green.service.abstraction.language.LanguageService;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LanguageService {
+public class LanguageServiceImpl implements LanguageService {
 
     private final LanguageRepository languageRepository;
     private final ModelMapper modelMapper;

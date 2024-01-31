@@ -5,6 +5,7 @@ import com.green.entity.translation.Language;
 import com.green.entity.tree.TreeDocument;
 import com.green.repository.LanguageRepository;
 import com.green.repository.TreeRepository;
+import com.green.service.abstraction.tree.TreeService;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TreeService {
+public class TreeServiceImpl implements TreeService {
 
     private final TreeRepository treeRepository;
     private final LanguageRepository languageRepository;

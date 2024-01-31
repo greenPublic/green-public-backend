@@ -1,7 +1,7 @@
 package com.green.controller.informations;
 
 import com.green.dto.informations.InformationDto;
-import com.green.service.implementation.informations.InformationService;
+import com.green.service.implementation.informations.InformationServiceImpl;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +21,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/information")
 public class InformationController {
 
-    private final InformationService informationService;
+    private final InformationServiceImpl informationServiceImpl;
 
     @Autowired
-    public InformationController(InformationService informationService) {
-        this.informationService = informationService;
+    public InformationController(InformationServiceImpl informationServiceImpl) {
+        this.informationServiceImpl = informationServiceImpl;
     }
 
     @GetMapping
     public ResponseEntity<List<InformationDto>> getAllInformation(@RequestHeader String lang) {
-        List<InformationDto> informationList = informationService.getAllInformation(lang);
+        List<InformationDto> informationList = informationServiceImpl.getAllInformation(lang);
         return new ResponseEntity<>(informationList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<InformationDto> getInformationById(@PathVariable String id) {
-        Optional<InformationDto> information = informationService.getInformationById(id);
+        Optional<InformationDto> information = informationServiceImpl.getInformationById(id);
         return information.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -44,7 +44,7 @@ public class InformationController {
     @PostMapping
     public ResponseEntity<InformationDto> createInformation(
             @RequestBody InformationDto information, @RequestHeader String lang) {
-        InformationDto createdInformation = informationService.createInformation(information, lang);
+        InformationDto createdInformation = informationServiceImpl.createInformation(information, lang);
         return new ResponseEntity<>(createdInformation, HttpStatus.CREATED);
     }
 
@@ -52,9 +52,9 @@ public class InformationController {
     public ResponseEntity<InformationDto> updateInformation(@PathVariable String id,
                                                             @RequestBody
                                                             InformationDto information) {
-        Optional<InformationDto> existingInformation = informationService.getInformationById(id);
+        Optional<InformationDto> existingInformation = informationServiceImpl.getInformationById(id);
         if (existingInformation.isPresent()) {
-            InformationDto updatedInformation = informationService.updateInformation(information);
+            InformationDto updatedInformation = informationServiceImpl.updateInformation(information);
             return new ResponseEntity<>(updatedInformation, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -63,13 +63,13 @@ public class InformationController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteInformation(@PathVariable String id) {
-        informationService.deleteInformation(id);
+        informationServiceImpl.deleteInformation(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/header/{header}")
     public ResponseEntity<InformationDto> getInformationByHeader(@PathVariable String header) {
-        InformationDto information = informationService.getInformationByHeader(header);
+        InformationDto information = informationServiceImpl.getInformationByHeader(header);
         return new ResponseEntity<>(information, HttpStatus.OK);
     }
 
@@ -77,7 +77,7 @@ public class InformationController {
     public ResponseEntity<List<InformationDto>> getInformationByLanguage(@PathVariable
                                                                          String language) {
         List<InformationDto> informationList =
-                informationService.getInformationByLanguage(language);
+                informationServiceImpl.getInformationByLanguage(language);
         return new ResponseEntity<>(informationList, HttpStatus.OK);
     }
 
@@ -85,13 +85,13 @@ public class InformationController {
     public ResponseEntity<List<InformationDto>> getInformationByDescriptionContaining(
             @PathVariable String keyword) {
         List<InformationDto> informationList =
-                informationService.getInformationByDescriptionContaining(keyword);
+                informationServiceImpl.getInformationByDescriptionContaining(keyword);
         return new ResponseEntity<>(informationList, HttpStatus.OK);
     }
 
     @DeleteMapping("/header/{header}")
     public ResponseEntity<Void> deleteInformationByHeader(@PathVariable String header) {
-        informationService.deleteInformationByHeader(header);
+        informationServiceImpl.deleteInformationByHeader(header);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

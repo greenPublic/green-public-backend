@@ -5,6 +5,7 @@ import com.green.entity.translation.Language;
 import com.green.entity.tree.SoilType;
 import com.green.repository.LanguageRepository;
 import com.green.repository.SoilTypeRepository;
+import com.green.service.abstraction.tree.SoilTypeService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SoilTypeService {
+public class SoilTypeServiceImpl implements SoilTypeService {
 
     private final SoilTypeRepository soilTypeRepository;
     private final ModelMapper modelMapper;

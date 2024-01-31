@@ -1,7 +1,7 @@
 package com.green.controller.stores;
 
 import com.green.dto.stores.RetailStoreDto;
-import com.green.service.implementation.stores.RetailStoreService;
+import com.green.service.implementation.stores.RetailStoreServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,23 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/retailStores")
 public class RetailStoreController {
 
-    private final RetailStoreService retailStoreService;
+    private final RetailStoreServiceImpl retailStoreServiceImpl;
 
     @Autowired
-    public RetailStoreController(RetailStoreService retailStoreService) {
-        this.retailStoreService = retailStoreService;
+    public RetailStoreController(RetailStoreServiceImpl retailStoreServiceImpl) {
+        this.retailStoreServiceImpl = retailStoreServiceImpl;
     }
 
     @PostMapping
     public ResponseEntity<RetailStoreDto> createRetailStore(
             @RequestBody RetailStoreDto retailStoreDto, @RequestHeader String lang) {
-        RetailStoreDto createdRetailStore = retailStoreService.createRetailStore(retailStoreDto, lang);
+        RetailStoreDto createdRetailStore = retailStoreServiceImpl.createRetailStore(retailStoreDto, lang);
         return new ResponseEntity<>(createdRetailStore, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RetailStoreDto> getRetailStoreById(@PathVariable String id) {
-        RetailStoreDto retailStoreDto = retailStoreService.getRetailStoreById(id);
+        RetailStoreDto retailStoreDto = retailStoreServiceImpl.getRetailStoreById(id);
         if (retailStoreDto != null) {
             return new ResponseEntity<>(retailStoreDto, HttpStatus.OK);
         } else {
@@ -46,7 +46,7 @@ public class RetailStoreController {
 
     @GetMapping
     public ResponseEntity<List<RetailStoreDto>> getAllRetailStores(@RequestHeader String lang) {
-        List<RetailStoreDto> retailStores = retailStoreService.getAllRetailStores(lang);
+        List<RetailStoreDto> retailStores = retailStoreServiceImpl.getAllRetailStores(lang);
         return new ResponseEntity<>(retailStores, HttpStatus.OK);
     }
 
@@ -54,7 +54,7 @@ public class RetailStoreController {
     public ResponseEntity<RetailStoreDto> updateRetailStore(@PathVariable String id, @RequestBody
     RetailStoreDto retailStoreDto) {
         RetailStoreDto updatedRetailStore =
-                retailStoreService.updateRetailStore(id, retailStoreDto);
+                retailStoreServiceImpl.updateRetailStore(id, retailStoreDto);
         if (updatedRetailStore != null) {
             return new ResponseEntity<>(updatedRetailStore, HttpStatus.OK);
         } else {
@@ -64,7 +64,7 @@ public class RetailStoreController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRetailStoreById(@PathVariable String id) {
-        retailStoreService.deleteRetailStoreById(id);
+        retailStoreServiceImpl.deleteRetailStoreById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

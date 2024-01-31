@@ -1,7 +1,7 @@
 package com.green.controller.suggestions;
 
 import com.green.dto.suggestions.SuggestionsDto;
-import com.green.service.implementation.suggestions.SuggestionsService;
+import com.green.service.implementation.suggestions.SuggestionsServiceImpl;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +21,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/suggestions")
 public class SuggestionsController {
 
-    private final SuggestionsService suggestionsService;
+    private final SuggestionsServiceImpl suggestionsServiceImpl;
 
     @Autowired
-    public SuggestionsController(SuggestionsService suggestionsService) {
-        this.suggestionsService = suggestionsService;
+    public SuggestionsController(SuggestionsServiceImpl suggestionsServiceImpl) {
+        this.suggestionsServiceImpl = suggestionsServiceImpl;
     }
 
     @PostMapping
     public ResponseEntity<SuggestionsDto> createSuggestions(
             @RequestBody SuggestionsDto suggestionsDto, @RequestHeader String lang) {
-        SuggestionsDto createdSuggestions = suggestionsService.createSuggestions(suggestionsDto, lang);
+        SuggestionsDto createdSuggestions = suggestionsServiceImpl.createSuggestions(suggestionsDto, lang);
         return new ResponseEntity<>(createdSuggestions, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<SuggestionsDto> getSuggestionsById(@PathVariable String id) {
-        Optional<SuggestionsDto> suggestionsDtoOptional = suggestionsService.getSuggestionsById(id);
+        Optional<SuggestionsDto> suggestionsDtoOptional = suggestionsServiceImpl.getSuggestionsById(id);
         return suggestionsDtoOptional.map(
                         suggestionsDto -> new ResponseEntity<>(suggestionsDto, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -45,7 +45,7 @@ public class SuggestionsController {
 
     @GetMapping
     public ResponseEntity<List<SuggestionsDto>> getAllSuggestions(@RequestHeader String lang) {
-        List<SuggestionsDto> suggestionsList = suggestionsService.getAllSuggestions(lang);
+        List<SuggestionsDto> suggestionsList = suggestionsServiceImpl.getAllSuggestions(lang);
         return new ResponseEntity<>(suggestionsList, HttpStatus.OK);
     }
 
@@ -53,7 +53,7 @@ public class SuggestionsController {
     public ResponseEntity<SuggestionsDto> updateSuggestions(@PathVariable String id, @RequestBody
     SuggestionsDto suggestionsDto) {
         SuggestionsDto updatedSuggestions =
-                suggestionsService.updateSuggestions(id, suggestionsDto);
+                suggestionsServiceImpl.updateSuggestions(id, suggestionsDto);
         return updatedSuggestions != null ?
                 new ResponseEntity<>(updatedSuggestions, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -61,7 +61,7 @@ public class SuggestionsController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSuggestions(@PathVariable String id) {
-        suggestionsService.deleteSuggestions(id);
+        suggestionsServiceImpl.deleteSuggestions(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -1,8 +1,7 @@
 package com.green.controller.tree;
 
-import com.green.dto.language.LanguageDto;
 import com.green.dto.tree.TreeSpeciesDto;
-import com.green.service.implementation.tree.TreeSpeciesService;
+import com.green.service.implementation.tree.TreeSpeciesServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,22 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/tree-species")
 public class TreeSpeciesController {
 
-    private final TreeSpeciesService treeSpeciesService;
+    private final TreeSpeciesServiceImpl treeSpeciesServiceImpl;
 
     @Autowired
-    public TreeSpeciesController(TreeSpeciesService treeSpeciesService) {
-        this.treeSpeciesService = treeSpeciesService;
+    public TreeSpeciesController(TreeSpeciesServiceImpl treeSpeciesServiceImpl) {
+        this.treeSpeciesServiceImpl = treeSpeciesServiceImpl;
     }
 
     @GetMapping
     public ResponseEntity<List<TreeSpeciesDto>> getAllTreeSpecies(@RequestHeader String lang) {
-        List<TreeSpeciesDto> treeSpeciesList = treeSpeciesService.getAllTreeSpecies(lang);
+        List<TreeSpeciesDto> treeSpeciesList = treeSpeciesServiceImpl.getAllTreeSpecies(lang);
         return new ResponseEntity<>(treeSpeciesList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TreeSpeciesDto> getTreeSpeciesById(@PathVariable String id) {
-        return treeSpeciesService.getTreeSpeciesById(id)
+        return treeSpeciesServiceImpl.getTreeSpeciesById(id)
                 .map(treeSpeciesDto -> new ResponseEntity<>(treeSpeciesDto, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -43,19 +42,19 @@ public class TreeSpeciesController {
     @PostMapping
     public ResponseEntity<TreeSpeciesDto> saveTreeSpecies(
             @RequestBody TreeSpeciesDto treeSpeciesDto, @RequestHeader String lang) {
-        TreeSpeciesDto savedTreeSpecies = treeSpeciesService.saveTreeSpecies(treeSpeciesDto, lang);
+        TreeSpeciesDto savedTreeSpecies = treeSpeciesServiceImpl.saveTreeSpecies(treeSpeciesDto, lang);
         return new ResponseEntity<>(savedTreeSpecies, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTreeSpecies(@PathVariable String id) {
-        treeSpeciesService.deleteTreeSpecies(id);
+        treeSpeciesServiceImpl.deleteTreeSpecies(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<TreeSpeciesDto> getTreeSpeciesByName(@PathVariable String name) {
-        TreeSpeciesDto treeSpeciesDto = treeSpeciesService.getTreeSpeciesByName(name);
+        TreeSpeciesDto treeSpeciesDto = treeSpeciesServiceImpl.getTreeSpeciesByName(name);
         return new ResponseEntity<>(treeSpeciesDto, HttpStatus.OK);
     }
 
@@ -63,13 +62,13 @@ public class TreeSpeciesController {
     public ResponseEntity<TreeSpeciesDto> getTreeSpeciesByScientificName(
             @PathVariable String scientificName) {
         TreeSpeciesDto treeSpeciesDto =
-                treeSpeciesService.getTreeSpeciesByScientificName(scientificName);
+                treeSpeciesServiceImpl.getTreeSpeciesByScientificName(scientificName);
         return new ResponseEntity<>(treeSpeciesDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/name/{name}")
     public ResponseEntity<Void> deleteTreeSpeciesByName(@PathVariable String name) {
-        treeSpeciesService.deleteTreeSpeciesByName(name);
+        treeSpeciesServiceImpl.deleteTreeSpeciesByName(name);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

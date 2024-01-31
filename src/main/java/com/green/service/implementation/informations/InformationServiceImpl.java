@@ -5,6 +5,7 @@ import com.green.entity.informations.Information;
 import com.green.entity.translation.Language;
 import com.green.repository.InformationRepository;
 import com.green.repository.LanguageRepository;
+import com.green.service.abstraction.informations.InformationService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class InformationService {
+public class InformationServiceImpl implements InformationService {
 
     private final InformationRepository informationRepository;
     private final ModelMapper modelMapper;

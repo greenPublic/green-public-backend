@@ -1,7 +1,7 @@
 package com.green.controller.tree;
 
 import com.green.dto.tree.SoilTypeDto;
-import com.green.service.implementation.tree.SoilTypeService;
+import com.green.service.implementation.tree.SoilTypeServiceImpl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,25 +21,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/soilTypes")
 public class SoilTypeController {
 
-    private final SoilTypeService soilTypeService;
+    private final SoilTypeServiceImpl soilTypeServiceImpl;
 
     @PostMapping
     public ResponseEntity<SoilTypeDto> createSoilType(@RequestBody SoilTypeDto soilTypeDto,
                                                       @RequestHeader
                                                       String lang) {
-        SoilTypeDto createdSoilTypeDto = soilTypeService.createSoilType(soilTypeDto, lang);
+        SoilTypeDto createdSoilTypeDto = soilTypeServiceImpl.createSoilType(soilTypeDto, lang);
         return new ResponseEntity<>(createdSoilTypeDto, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<SoilTypeDto>> getAllSoilTypes(@RequestHeader String lang) {
-        List<SoilTypeDto> soilTypeDtos = soilTypeService.getAllSoilTypes(lang);
+        List<SoilTypeDto> soilTypeDtos = soilTypeServiceImpl.getAllSoilTypes(lang);
         return new ResponseEntity<>(soilTypeDtos, HttpStatus.OK);
     }
 
     @GetMapping("/{name}")
     public ResponseEntity<SoilTypeDto> getSoilTypeByName(@PathVariable String name) {
-        SoilTypeDto soilTypeDto = soilTypeService.getSoilTypeByName(name);
+        SoilTypeDto soilTypeDto = soilTypeServiceImpl.getSoilTypeByName(name);
         return soilTypeDto != null
                 ? new ResponseEntity<>(soilTypeDto, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -50,7 +50,7 @@ public class SoilTypeController {
             @PathVariable String name,
             @RequestBody SoilTypeDto updatedSoilTypeDto
     ) {
-        SoilTypeDto updatedSoilType = soilTypeService.updateSoilType(name, updatedSoilTypeDto);
+        SoilTypeDto updatedSoilType = soilTypeServiceImpl.updateSoilType(name, updatedSoilTypeDto);
 
         return updatedSoilType != null
                 ? new ResponseEntity<>(updatedSoilType, HttpStatus.OK)
@@ -59,7 +59,7 @@ public class SoilTypeController {
 
     @DeleteMapping("/{name}")
     public ResponseEntity<Void> deleteSoilTypeByName(@PathVariable String name) {
-        soilTypeService.deleteSoilTypeByName(name);
+        soilTypeServiceImpl.deleteSoilTypeByName(name);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

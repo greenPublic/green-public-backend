@@ -5,6 +5,7 @@ import com.green.entity.stores.RetailStore;
 import com.green.entity.translation.Language;
 import com.green.repository.LanguageRepository;
 import com.green.repository.RetailStoreRepository;
+import com.green.service.abstraction.stores.RetailStoreService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class RetailStoreService {
+public class RetailStoreServiceImpl implements RetailStoreService {
 
     private final RetailStoreRepository retailStoreRepository;
     private final LanguageRepository languageRepository;

@@ -1,12 +1,12 @@
 package com.green.service.implementation.tree;
 
 
-import com.green.dto.language.LanguageDto;
 import com.green.dto.tree.TreeSpeciesDto;
 import com.green.entity.translation.Language;
 import com.green.entity.tree.TreeSpecies;
 import com.green.repository.LanguageRepository;
 import com.green.repository.TreeSpeciesRepository;
+import com.green.service.abstraction.tree.TreeSpeciesService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TreeSpeciesService {
+public class TreeSpeciesServiceImpl implements TreeSpeciesService {
 
     private final TreeSpeciesRepository treeSpeciesRepository;
     private final ModelMapper modelMapper;

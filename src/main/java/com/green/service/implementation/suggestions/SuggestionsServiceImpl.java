@@ -5,6 +5,7 @@ import com.green.entity.suggestions.Suggestions;
 import com.green.entity.translation.Language;
 import com.green.repository.LanguageRepository;
 import com.green.repository.SuggestionsRepository;
+import com.green.service.abstraction.suggestions.SuggestionsService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SuggestionsService {
+public class SuggestionsServiceImpl implements SuggestionsService {
 
     private final SuggestionsRepository suggestionsRepository;
     private final ModelMapper modelMapper;
