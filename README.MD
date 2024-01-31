@@ -10,7 +10,7 @@ This repository contains the backend code for the GreenPublic application, which
 
 The project is organized into multiple phases to facilitate incremental development. Each phase focuses on specific functionalities. The project structure is as follows:
 
-1. **Phase 1: Tree Suggestions, Tree Information, Retail Stores**
+# Phase #1: **Tree Suggestions, Tree Information, Retail Stores**
     - Controllers:
         - SoilTypeController
         - WateringFrequencyController
@@ -30,11 +30,11 @@ The project is organized into multiple phases to facilitate incremental developm
         - TreeDto
         - TreeSpeciesDto
 
-2. **Phase 2: Tree Donations System**
+# **Phase #2: Tree Donations System**
     - Introduce functionalities related to tree donations.
     - Additional controllers, models, and services specific to tree donations.
 
-3. **Phase 3: Tree Planters Community**
+# **Phase #3: Tree Planters Community**
     - Develop features for a community of tree planters.
     - Include controllers, models, and services for community-related activities.
 
